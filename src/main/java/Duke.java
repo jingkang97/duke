@@ -9,30 +9,38 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         Scanner scan = new Scanner(System.in);
-        String[] todo = new String [100];
+        Task[] todo = new Task [100];
         int index = 0;
         while(true){
             String input = scan.nextLine();
-
-            if(input.equals("bye")){
-                System.out.println("______________________________________________________________________________");
-                System.out.println("Bye. Hope to see you again soon!");
-                System.out.println("______________________________________________________________________________");
-                break;
+            String[] tokens = input.split(" ");
+            if(tokens[0].equals("done")){
+                int result = Integer.parseInt(tokens[1]);
+                todo[result - 1].isDone = true;
+                System.out.println("Nice! I've marked this task as done: ");
+                System.out.println("[" + todo[result - 1].getStatusIcon() + "] " + todo[result - 1].description);
             }
-            if(input.equals("list")){
-                for(int i = 0; i < todo.length; i += 1){
-                    if(todo[i]!=null){
-                        System.out.println(i+1 + ". " + todo[i]);
-                    }
+            else {
+                if (input.equals("bye")) {
+                    System.out.println("______________________________________________________________________________");
+                    System.out.println("Bye. Hope to see you again soon!");
+                    System.out.println("______________________________________________________________________________");
+                    break;
                 }
-            }
-            else{
-                todo[index] = input;
-                index += 1;
-                System.out.println("______________________________________________________________________________");
-                System.out.println("added: " + input);
-                System.out.println("______________________________________________________________________________");
+                if (input.equals("list")) {
+                    System.out.println("Here are the tasks in you list:");
+                    for (int i = 0; i < todo.length; i += 1) {
+                        if (todo[i] != null) {
+                            System.out.println(i + 1 + ".[" + todo[i].getStatusIcon() + "] " + todo[i].description);
+                        }
+                    }
+                } else {
+                    todo[index] = new Task(input);
+                    index += 1;
+                    System.out.println("______________________________________________________________________________");
+                    System.out.println("added: " + input);
+                    System.out.println("______________________________________________________________________________");
+                }
             }
         }
     }
