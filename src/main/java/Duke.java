@@ -9,16 +9,47 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         Scanner scan = new Scanner(System.in);
-        Task[] todo = new Task [100];
+        Task[] tasks = new Task [100];
         int index = 0;
         while(true){
             String input = scan.nextLine();
+
             String[] tokens = input.split(" ");
             if(tokens[0].equals("done")){
                 int result = Integer.parseInt(tokens[1]);
-                todo[result - 1].isDone = true;
+                tasks[result - 1].isDone = true;
                 System.out.println("Nice! I've marked this task as done: ");
-                System.out.println("[" + todo[result - 1].getStatusIcon() + "] " + todo[result - 1].description);
+                System.out.println("[" + tasks[result - 1].getStatusIcon() + "] " + tasks[result - 1].description);
+            }
+            if(tokens[0].equals("deadline")){
+                String[] token = input.split("deadline|/by");
+                tasks[index] = new Deadline(token[1], token[2]);
+                System.out.println("______________________________________________________________________________");
+                System.out.println("Got it. I have added this task: ");
+                System.out.println(tasks[index]);
+                System.out.println("Now you have " + Integer.toString(index + 1) + " tasks in the list.");
+                System.out.println("______________________________________________________________________________");
+                index += 1;
+            }
+            if(tokens[0].equals("event")){
+                String[] token = input.split("event|/at");
+                tasks[index] = new Event(token[1], token[2]);
+                System.out.println("______________________________________________________________________________");
+                System.out.println("Got it. I have added this task: ");
+                System.out.println(tasks[index]);
+                System.out.println("Now you have " + Integer.toString(index + 1) + " tasks in the list.");
+                System.out.println("______________________________________________________________________________");
+                index += 1;
+            }
+            if(tokens[0].equals("todo")){
+                String[] token = input.split("todo");
+                tasks[index] = new ToDo(token[1]);
+                System.out.println("______________________________________________________________________________");
+                System.out.println("Got it. I have added this task: ");
+                System.out.println(tasks[index]);
+                System.out.println("Now you have " + Integer.toString(index + 1) + " tasks in the list.");
+                System.out.println("______________________________________________________________________________");
+                index += 1;
             }
             else {
                 if (input.equals("bye")) {
@@ -29,19 +60,15 @@ public class Duke {
                 }
                 if (input.equals("list")) {
                     System.out.println("Here are the tasks in you list:");
-                    for (int i = 0; i < todo.length; i += 1) {
-                        if (todo[i] != null) {
-                            System.out.println(i + 1 + ".[" + todo[i].getStatusIcon() + "] " + todo[i].description);
+                    for (int i = 0; i < tasks.length; i += 1) {
+                        if (tasks[i] != null) {
+                            System.out.println(i + 1 + tasks[i].toString());
                         }
                     }
-                } else {
-                    todo[index] = new Task(input);
-                    index += 1;
-                    System.out.println("______________________________________________________________________________");
-                    System.out.println("added: " + input);
-                    System.out.println("______________________________________________________________________________");
                 }
+
             }
+
         }
     }
 }
