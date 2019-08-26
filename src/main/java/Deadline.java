@@ -7,7 +7,7 @@ public class Deadline extends Task {
         if(description.equals("deadline ") || description.equals("deadline")){
             throw new DukeException("______________________________________________________________________________\n ☹ OOPS!!! The description of a deadline cannot be empty.\n______________________________________________________________________________");
         }
-        if(by.equals(description)){
+        if(by.equals(description) || by.equals(" ")){
             throw new DukeException("______________________________________________________________________________\n ☹ OOPS!!! The time and date of a deadline cannot be empty.\n______________________________________________________________________________");
         }
         else{

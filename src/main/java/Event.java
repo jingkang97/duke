@@ -7,7 +7,7 @@ public class Event extends Task{
         if(description.equals("event ") || description.equals("event")){
             throw new DukeException("______________________________________________________________________________\n ☹ OOPS!!! The description of an event cannot be empty.\n______________________________________________________________________________");
         }
-        if(at.equals(description)){
+        if(at.equals(description) || at.equals(" ")){
             throw new DukeException("______________________________________________________________________________\n ☹ OOPS!!! The time and date of an event cannot be empty.\n______________________________________________________________________________");
         }
         else{
