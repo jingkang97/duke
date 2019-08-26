@@ -20,7 +20,7 @@ public class Duke {
                 System.out.println("Nice! I've marked this task as done: ");
                 System.out.println("[" + tasks[result - 1].getStatusIcon() + "]" + tasks[result - 1].description);
             }
-            if(tokens[0].equals("deadline")){
+            else if(tokens[0].equals("deadline")){
                 String[] token = input.split("/by");
                 try{
                     tasks[index] = new Deadline(token[0], token[token.length-1]);
@@ -35,7 +35,7 @@ public class Duke {
                     System.out.println(e.getMessage());
                 }
             }
-            if(tokens[0].equals("event")){
+            else if(tokens[0].equals("event")){
                 String[] token = input.split("/at");
                 try {
                     tasks[index] = new Event(token[0], token[token.length-1]);
@@ -50,7 +50,7 @@ public class Duke {
                     System.out.println(e.getMessage());
                 }
             }
-            if(tokens[0].equals("todo")){
+            else if(tokens[0].equals("todo")){
                 try {
                     tasks[index] = new ToDo(input);
                     System.out.println("______________________________________________________________________________");
@@ -80,7 +80,7 @@ public class Duke {
                     }
                 }
                 else{
-                    System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    System.out.println(" ______________________________________________________________________________\n ☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n______________________________________________________________________________");
                 }
 
             }

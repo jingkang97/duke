@@ -4,15 +4,16 @@ public class Task {
 
     public Task(String description) throws DukeException{
 
-
         if(description.equals("deadline")|| description.equals("todo") || description.equals("event")){
             this.description = description; //this.description refers to protected String description , = description (parameter)
         }
         else{
+
             String token[] = description.split("deadline|todo|event");
             String intermediate = token[1];
             this.description = intermediate;
         }
+
         this.isDone = false;
     }
 
