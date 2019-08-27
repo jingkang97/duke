@@ -2,7 +2,7 @@ public class Task {
     protected String description;
     protected boolean isDone;
 
-    public Task(String description) throws DukeException{
+    public Task(String description){
 
         if(description.equals("deadline")|| description.equals("todo") || description.equals("event")){
             this.description = description; //this.description refers to protected String description , = description (parameter)

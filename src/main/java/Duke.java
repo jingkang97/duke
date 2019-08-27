@@ -2,6 +2,7 @@ import java.io.BufferedWriter;
 import java.util.Scanner;
 import java.io.File;
 import java.io.*;
+import java.time.format.DateTimeFormatter;
 public class Duke {
     public static void main(String[] args) throws IOException{
         String logo = " ____        _        \n"
@@ -26,7 +27,7 @@ public class Duke {
                 String filetoken[] = fileContent[index].split(",");
                 if(filetoken[0].equals("D")){
                     String description = filetoken[2];
-                    String by = " " + filetoken[3];
+                    String by = filetoken[3];
                     tasks[index] = new Deadline("deadline " + description, by);
                     tasks[index].isDone = filetoken[1].equals("true") ? true : false;;
                 }
@@ -37,7 +38,7 @@ public class Duke {
                 }
                 if(filetoken[0].equals("E")){
                     String description = filetoken[2];
-                    String by = " " + filetoken[3];
+                    String by = filetoken[3];
                     tasks[index] = new Event("event " + description, by);
                     tasks[index].isDone = filetoken[1].equals("true") ? true : false;
                 }
@@ -64,7 +65,7 @@ public class Duke {
                 String[] token = input.split("/by");
                 String[] recordToken = input.split("deadline|/by");
                 try{
-                    tasks[index] = new Deadline(token[0], token[token.length-1]);
+                    tasks[index] = new Deadline(token[0], token[token.length-1].trim());
                     System.out.println("______________________________________________________________________________");
                     System.out.println("Got it. I have added this task: ");
                     System.out.println(tasks[index]);
@@ -82,7 +83,7 @@ public class Duke {
                 String[] token = input.split("/at");
                 String[] recordToken = input.split("event|/at");
                 try {
-                    tasks[index] = new Event(token[0], token[token.length-1]);
+                    tasks[index] = new Event(token[0], token[token.length-1].trim());
                     System.out.println("______________________________________________________________________________");
                     System.out.println("Got it. I have added this task: ");
                     System.out.println(tasks[index]);
