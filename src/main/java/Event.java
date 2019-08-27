@@ -28,11 +28,27 @@ public class Event extends Task{
         try{
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
             LocalDateTime localDate = LocalDateTime.parse(dateTime, formatter);
-            DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d 'of' MMMM yyyy, h':'mma");;
+            String localDateTimeString = formatter.format(localDate);
+
+            DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d'" + ordinalConversion(localDateTimeString) + "' 'of' MMMM yyyy, h':'mma");
             this.EventFormatDateTime = customFormatter.format(localDate);
         }catch(Exception e){
             System.out.println("Please input the date and time in this format: dd/mm/yyyy hhmm");
         }
     }
 
+    public String ordinalConversion(String dateTimeFormat){
+        String customToken [] = dateTimeFormat.split("/");
+        int ordinalNumber = Integer.parseInt(customToken[0]);
+        switch(ordinalNumber % 10){
+            case 1:
+                return "st";
+            case 2:
+                return "nd";
+            case 3:
+                return "rd";
+            default:
+                return "th";
+        }
+    }
 }
