@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 public class Duke {
     public static void main(String[] args) throws IOException{
         String logo = " ____        _        \n"
@@ -11,9 +12,12 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
+        System.out.println("Hello");
+        //Task[] tasks = new Task [100];
+        ArrayList<Task> tasks= new ArrayList<>(100);
+        //String [] Record = new String [100]; //to be written to file at the end
+        ArrayList<String> Record = new ArrayList<String>(100);
 
-        Task[] tasks = new Task [100];
-        String [] Record = new String [100]; //to be written to file at the end
         int index = 0;
         try{
             File file = new File("/Users/ngjingkang/duke/data/duke.txt");
@@ -23,26 +27,29 @@ public class Duke {
 
             while(filescan.hasNext()){
                 fileContent[index] = filescan.next();
-                Record[index] = fileContent[index];
+                Record.add(fileContent[index]);//= fileContent[index];
                 String filetoken[] = fileContent[index].split(",");
                 if(filetoken[0].equals("D")){
                     String description = filetoken[2];
                     String by = filetoken[3];
-                    tasks[index] = new Deadline("deadline " + description, by);
-                    tasks[index].isDone = filetoken[1].equals("true") ? true : false;;
+                    tasks.add(new Deadline("deadline " + description, by));// = new Deadline("deadline " + description, by);
+                    tasks.get(index).isDone = filetoken[1].equals("true") ? true : false;
+                    index += 1;
                 }
                 if(filetoken[0].equals("T")){
                     String description = filetoken[2];
-                    tasks[index] = new ToDo("todo " + description);
-                    tasks[index].isDone = filetoken[1].equals("true") ? true : false;
+                    tasks.add(new ToDo("todo " + description));// = new ToDo("todo " + description);
+                    tasks.get(index).isDone = filetoken[1].equals("true") ? true : false;
+                    index += 1;
                 }
                 if(filetoken[0].equals("E")){
                     String description = filetoken[2];
                     String by = filetoken[3];
-                    tasks[index] = new Event("event " + description, by);
-                    tasks[index].isDone = filetoken[1].equals("true") ? true : false;
+                    tasks.add(new Event("event " + description, by));// = new Event("event " + description, by);
+                    tasks.get(index).isDone = filetoken[1].equals("true") ? true : false;
+                    index += 1;
                 }
-                index += 1;
+                //index += 1;
             }
         }catch(Exception e){
             System.out.println(e);
@@ -53,25 +60,37 @@ public class Duke {
 
             String input = scan.nextLine();
             String[] tokens = input.split(" ");
+
             if(tokens[0].equals("done")){
                 int result = Integer.parseInt(tokens[1]);
-                tasks[result - 1].isDone = true;
+                tasks.get(result - 1).isDone = true;
                 System.out.println("Nice! I've marked this task as done: ");
-                System.out.println("[" + tasks[result - 1].getStatusIcon() + "]" + tasks[result - 1].description);
-                String newRecord = Record[result - 1].replace(",false", ",true");
-                Record[result-1] = newRecord;
+                System.out.println("[" + tasks.get(result - 1).getStatusIcon() + "]" + tasks.get(result - 1).description);
+                String newRecord = Record.get(result-1).replace(",false", ",true");
+                Record.add(result-1, newRecord);
+            }
+            else if(tokens[0].equals("remove")){
+
+                int result = Integer.parseInt(tokens[1]);
+                String taskToken[] = tasks.get(result-1).toString().split("]");
+                String taskType = taskToken[0].equals("[E") ? "E" : taskToken[0].equals("[D") ? "D" : "T";
+                System.out.println("Noted. I've removed this task: ");
+                System.out.println("[" + taskType + "]" + "[" + tasks.get(result - 1).getStatusIcon() + "]" + tasks.get(result - 1).description);
+                tasks.remove(result - 1);
+                Record.remove(result - 1);
+                index -= 1;
             }
             else if(tokens[0].equals("deadline")){
                 String[] token = input.split("/by");
                 String[] recordToken = input.split("deadline|/by");
                 try{
-                    tasks[index] = new Deadline(token[0], token[token.length-1].trim());
+                    tasks.add(new Deadline(token[0], token[token.length-1].trim()));// = new Deadline(token[0], token[token.length-1].trim());
                     System.out.println("______________________________________________________________________________");
                     System.out.println("Got it. I have added this task: ");
-                    System.out.println(tasks[index]);
+                    System.out.println(tasks.get(index));
                     System.out.println("Now you have " + Integer.toString(index + 1) + " tasks in the list.");
                     System.out.println("______________________________________________________________________________");
-                    Record[index] = "D," + "false," + recordToken[1].trim() + "," + token[token.length-1].trim();
+                    Record.add("D," + "false," + recordToken[1].trim() + "," + token[token.length-1].trim());
                     index += 1;
 
                 }
@@ -83,13 +102,13 @@ public class Duke {
                 String[] token = input.split("/at");
                 String[] recordToken = input.split("event|/at");
                 try {
-                    tasks[index] = new Event(token[0], token[token.length-1].trim());
+                    tasks.add(new Event(token[0], token[token.length-1].trim()));
                     System.out.println("______________________________________________________________________________");
                     System.out.println("Got it. I have added this task: ");
-                    System.out.println(tasks[index]);
+                    System.out.println(tasks.get(index));
                     System.out.println("Now you have " + Integer.toString(index + 1) + " tasks in the list.");
                     System.out.println("______________________________________________________________________________");
-                    Record[index] = "E," + "false," + recordToken[1].trim() + "," + token[token.length-1].trim();
+                    Record.add("E," + "false," + recordToken[1].trim() + "," + token[token.length-1].trim());
                     index += 1;
                 }
                 catch(DukeException e){
@@ -98,15 +117,15 @@ public class Duke {
             }
             else if(tokens[0].equals("todo")){
                 try {
-                    tasks[index] = new ToDo(input);
+                    tasks.add(new ToDo(input));
                     String[] recordToken = input.split("todo");
                     System.out.println("______________________________________________________________________________");
                     System.out.println("Got it. I have added this task: ");
-                    System.out.println(tasks[index]);
+                    System.out.println(tasks.get(index));
                     System.out.println("Now you have " + Integer.toString(index + 1) + " tasks in the list.");
                     System.out.println("______________________________________________________________________________");
 
-                    Record[index] = "T," + "false," + recordToken[1].trim();
+                    Record.add("T," + "false," + recordToken[1].trim());
                     index += 1;
                 }
                 catch(DukeException e){
@@ -122,10 +141,8 @@ public class Duke {
                 }
                 if (input.equals("list")) {
                     System.out.println("Here are the tasks in you list:");
-                    for (int i = 0; i < tasks.length; i += 1) {
-                        if (tasks[i] != null) {
-                            System.out.println(i + 1 + "." +  tasks[i].toString());
-                        }
+                    for (int i = 0; i < index; i += 1) {
+                        System.out.println(i + 1 + "." + tasks.get(i).toString());
                     }
                 }
                 else{
@@ -135,13 +152,13 @@ public class Duke {
         }
         //Write to file from the Record array
         BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/ngjingkang/duke/data/duke.txt", false));
-        for(int l = 0; l < Record.length; l += 1){
-            if (Record[l] != null && l != 0) {
+        for(int l = 0; l < index; l += 1){
+            if (Record.get(l) != null && l != 0) {
                 writer.write("\n");
-                writer.write(Record[l]);
+                writer.write(Record.get(l));
             }
-            else if (Record[l] != null && l == 0) {
-                writer.write(Record[l]);
+            else if (Record.get(l) != null && l == 0) {
+                writer.write(Record.get(l));
             }
         }
         writer.flush();

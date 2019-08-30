@@ -1,10 +1,4 @@
-D,false,return book,2/12/2019 1800
-T,true,read book
-E,false,project meeting,2/12/2019 1800
-T,true,join sports club
 D,true,orbital,2/12/2019 1800
-E,true,study at utown,2/12/2019 1800
-D,false,sleep,2/12/2019 1800
-E,false,orbital splashdown,28/8/2019 2100
-D,true,GEH assignment,1/9/2019 2359
-D,true,submit assignment,9/9/2019 1900
+T,false,get essay
+D,false,a,9/9/2019 1800
+E,true,b,9/9/2019 1800
