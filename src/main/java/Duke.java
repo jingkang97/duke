@@ -16,7 +16,7 @@ public class Duke {
         //Task[] tasks = new Task [100];
         ArrayList<Task> tasks= new ArrayList<>(100);
         //String [] Record = new String [100]; //to be written to file at the end
-        ArrayList<String> Record = new ArrayList<String>(100);
+        ArrayList<String> Record = new ArrayList<>(100);
 
         int index = 0;
         try{
@@ -34,19 +34,22 @@ public class Duke {
                     String by = filetoken[3];
                     tasks.add(new Deadline("deadline " + description, by));// = new Deadline("deadline " + description, by);
                     tasks.get(index).isDone = filetoken[1].equals("true") ? true : false;
+
                     index += 1;
                 }
-                if(filetoken[0].equals("T")){
+                else if(filetoken[0].equals("T")){
                     String description = filetoken[2];
                     tasks.add(new ToDo("todo " + description));// = new ToDo("todo " + description);
                     tasks.get(index).isDone = filetoken[1].equals("true") ? true : false;
+
                     index += 1;
                 }
-                if(filetoken[0].equals("E")){
+                else if(filetoken[0].equals("E")){
                     String description = filetoken[2];
                     String by = filetoken[3];
                     tasks.add(new Event("event " + description, by));// = new Event("event " + description, by);
                     tasks.get(index).isDone = filetoken[1].equals("true") ? true : false;
+
                     index += 1;
                 }
                 //index += 1;
@@ -54,6 +57,7 @@ public class Duke {
         }catch(Exception e){
             System.out.println(e);
         }
+
         Scanner scan = new Scanner(System.in); //taking in input
         BufferedWriter add = new BufferedWriter(new FileWriter("/Users/ngjingkang/duke/data/duke.txt", true));
         while(true){
@@ -67,7 +71,7 @@ public class Duke {
                 System.out.println("Nice! I've marked this task as done: ");
                 System.out.println("[" + tasks.get(result - 1).getStatusIcon() + "]" + tasks.get(result - 1).description);
                 String newRecord = Record.get(result-1).replace(",false", ",true");
-                Record.add(result-1, newRecord);
+                Record.set(result-1, newRecord);
             }
             else if(tokens[0].equals("remove")){
 
@@ -76,8 +80,8 @@ public class Duke {
                 String taskType = taskToken[0].equals("[E") ? "E" : taskToken[0].equals("[D") ? "D" : "T";
                 System.out.println("Noted. I've removed this task: ");
                 System.out.println("[" + taskType + "]" + "[" + tasks.get(result - 1).getStatusIcon() + "]" + tasks.get(result - 1).description);
-                tasks.remove(result - 1);
                 Record.remove(result - 1);
+                tasks.remove(result - 1);
                 index -= 1;
             }
             else if(tokens[0].equals("deadline")){
@@ -92,7 +96,6 @@ public class Duke {
                     System.out.println("______________________________________________________________________________");
                     Record.add("D," + "false," + recordToken[1].trim() + "," + token[token.length-1].trim());
                     index += 1;
-
                 }
                 catch(DukeException e){
                     System.out.println(e.getMessage());
