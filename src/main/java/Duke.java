@@ -52,7 +52,7 @@ public class Duke {
 
                     index += 1;
                 }
-                //index += 1;
+
             }
         }catch(Exception e){
             System.out.println(e);
@@ -65,31 +65,8 @@ public class Duke {
             String input = scan.nextLine();
             String[] tokens = input.split(" ");
 //
-            if(tokens[0].equals("find")){
-                try {
-                    String findToken[] = input.split("find");
-                    String search = findToken[1].trim();
-                    if(tokens[1].equals(" ")){
-                        System.out.println("______________________________________________________________________________\n ☹ OOPS!!! The description of a deadline cannot be empty.\n______________________________________________________________________________");
-                    }
-                    System.out.println(search);
-                    int i = 1;
-                    ArrayList<String> searchResult = new ArrayList<>(100);
-                    System.out.println("______________________________________________________________________________\nHere are the matching tasks in your list:");
-                    for (int n = 0; n < index; n += 1) {
-                        //String lineToken[] = Record.get(n).split(",");
-                        String line = Record.get(n);
-                        if (line.contains(search)) {
-                            System.out.println(Integer.toString(i) + "." + tasks.get(n));
-                            i += 1;
-                        }
-                    }
-                    System.out.println("______________________________________________________________________________");
-                }catch(Exception e){
-                    System.out.println("______________________________________________________________________________\n ☹ OOPS!!! The task you want to find cannot be empty.\n______________________________________________________________________________");
-                }
-            }
-                if(tokens[0].equals("done")){
+
+            if(tokens[0].equals("done")){
                 int result = Integer.parseInt(tokens[1]);
                 tasks.get(result - 1).isDone = true;
                 System.out.println("Nice! I've marked this task as done: ");
