@@ -73,7 +73,17 @@ public class Duke {
                 String newRecord = Record.get(result-1).replace(",false", ",true");
                 Record.set(result-1, newRecord);
             }
+            else if(tokens[0].equals("remove")){
 
+                int result = Integer.parseInt(tokens[1]);
+                String taskToken[] = tasks.get(result-1).toString().split("]");
+                String taskType = taskToken[0].equals("[E") ? "E" : taskToken[0].equals("[D") ? "D" : "T";
+                System.out.println("Noted. I've removed this task: ");
+                System.out.println("[" + taskType + "]" + "[" + tasks.get(result - 1).getStatusIcon() + "]" + tasks.get(result - 1).description);
+                Record.remove(result - 1);
+                tasks.remove(result - 1);
+                index -= 1;
+            }
             else if(tokens[0].equals("deadline")){
                 String[] token = input.split("/by");
                 String[] recordToken = input.split("deadline|/by");
