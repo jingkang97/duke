@@ -1,4 +1,4 @@
 D,false,read get,2/2/2019 1900
 E,false,ece party,3/3/2019 1800
 D,true,get quiz,30/10/2019 2000
-T,true,jump
+T,true,sleep
