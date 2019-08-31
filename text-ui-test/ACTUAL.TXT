@@ -7,4 +7,4 @@
 Hello! I'm Duke
 What can I do for you?
 Noted. I've removed this task: 
-[D][✓] get quiz
+[E][✘] ece party
