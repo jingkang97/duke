@@ -1,12 +1,6 @@
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.lang.StringBuffer;
-import java.util.List;
-import java.util.stream.Stream;
 
 public class Parser {
 
@@ -125,11 +119,7 @@ public class Parser {
                     String timeDate[] = tasks.get(result - 1).toString().split("by: |\\)");
                     String by = timeDate[1].trim();
                     String datetime = by;
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'of' MMMM yyyy, h':'mma");
-                    LocalDateTime localDate = LocalDateTime.parse(datetime, formatter);
-                    DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-                    String formatDateTime = customFormatter.format(localDate);
-
+                    String formatDateTime = convertDateTime(datetime);
                     System.out.println("[" + taskType + "]" + "[" + tasks.get(result - 1).getStatusIcon() + "]" + tasks.get(result - 1).description + "(by: " + by + ")");
                     try {
                         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -143,14 +133,8 @@ public class Parser {
                             }
                         }
                         writer.flush();
-                        if (inputFile.delete()){
-                            if(!tempFile.renameTo(inputFile)){
-                                throw new IOException("Could not rename " + temporaryPathName + " to " + pathname);
-                            }
-                        }
-                        else{
-                            throw new IOException("Could not delete original input file");
-                        }
+                        inputFile.delete();
+                        tempFile.renameTo(inputFile);
                     }
                     catch(IOException e){
                         System.out.println("Unable to read or write file: " + e);
@@ -159,11 +143,7 @@ public class Parser {
                     String timeDate[] = tasks.get(result - 1).toString().split("at: |\\)");
                     String at = timeDate[1];
                     String datetime = at;
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'of' MMMM yyyy, h':'mma");
-                    LocalDateTime localDate = LocalDateTime.parse(datetime, formatter);
-                    DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-                    String formatDateTime = customFormatter.format(localDate);
-
+                    String formatDateTime = convertDateTime(datetime);
                     System.out.println("[" + taskType + "]" + "[" + tasks.get(result - 1).getStatusIcon() + "]" + tasks.get(result - 1).description + "(at: " + at + ")");
                     try {
                         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -177,14 +157,8 @@ public class Parser {
                             }
                         }
                         writer.flush();
-                        if (inputFile.delete()){
-                            if(!tempFile.renameTo(inputFile)){
-                                throw new IOException("Could not rename " + temporaryPathName + " to " + pathname);
-                            }
-                        }
-                        else{
-                            throw new IOException("Could not delete original input file");
-                        }
+                        inputFile.delete();
+                        tempFile.renameTo(inputFile);
                     }catch(IOException e){
                         System.out.println("Unable to read or write file: " + e);
                     }
@@ -202,14 +176,8 @@ public class Parser {
                             }
                         }
                         writer.flush();
-                        if (inputFile.delete()){
-                            if(!tempFile.renameTo(inputFile)){
-                                throw new IOException("Could not rename " + temporaryPathName + " to " + pathname);
-                            }
-                        }
-                        else{
-                            throw new IOException("Could not delete original input file");
-                        }
+                        inputFile.delete();
+                        tempFile.renameTo(inputFile);
                     }catch(IOException e){
                         System.out.println("Unable to read or write file: " + e);
                     }
@@ -223,7 +191,6 @@ public class Parser {
                 for (int i = 0; i < sizeOfArray; i += 1) {
                     System.out.println(i + 1 + "." + tasks.get(i).toString());
                 }
-
             }
                 break;
             case "done": {
@@ -234,17 +201,11 @@ public class Parser {
                 if (taskType[0].equals("deadline")) {
                     String timeDate[] = tasks.get(result - 1).toString().split("by: |\\)");
                     String by = timeDate[1].trim();
-
                     String datetime = by;
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'of' MMMM yyyy, h':'mma");
-                    LocalDateTime localDate = LocalDateTime.parse(datetime, formatter);
-                    DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-                    String formatDateTime = customFormatter.format(localDate);
-
+                    String formatDateTime = convertDateTime(datetime);
                     try {
                         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
                         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-
                         String lineToRemove = "D," + String.valueOf(tasks.get(result-1).isDone).trim() + "," + tasks.get(result-1).description.trim() + "," + formatDateTime;
                         String currentLine;
                         while((currentLine = reader.readLine()) != null){
@@ -258,14 +219,8 @@ public class Parser {
                             }
                         }
                         writer.flush();
-                        if (inputFile.delete()){
-                            if(!tempFile.renameTo(inputFile)){
-                                throw new IOException("Could not rename " + temporaryPathName + " to " + pathname);
-                            }
-                        }
-                        else{
-                            throw new IOException("Could not delete original input file");
-                        }
+                        inputFile.delete();
+                        tempFile.renameTo(inputFile);
                     }
                     catch(IOException e){
                         System.out.println("Unable to read or write file: " + e);
@@ -274,10 +229,7 @@ public class Parser {
                     String timeDate[] = tasks.get(result - 1).toString().split("at: |\\)");
                     String at = timeDate[1];
                     String datetime = at;
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'of' MMMM yyyy, h':'mma");
-                    LocalDateTime localDate = LocalDateTime.parse(datetime, formatter);
-                    DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-                    String formatDateTime = customFormatter.format(localDate);
+                    String formatDateTime = convertDateTime(datetime);
                     try {
                         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
                         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
@@ -294,14 +246,8 @@ public class Parser {
                             }
                         }
                         writer.flush();
-                        if (inputFile.delete()){
-                            if(!tempFile.renameTo(inputFile)){
-                                throw new IOException("Could not rename " + temporaryPathName + " to " + pathname);
-                            }
-                        }
-                        else{
-                            throw new IOException("Could not delete original input file");
-                        }
+                        inputFile.delete();
+                        tempFile.renameTo(inputFile);
                     }catch(IOException e){
                         System.out.println("Unable to read or write file: " + e);
                     }
@@ -322,14 +268,8 @@ public class Parser {
                             }
                         }
                         writer.flush();
-                        if (inputFile.delete()){
-                            if(!tempFile.renameTo(inputFile)){
-                                throw new IOException("Could not rename " + temporaryPathName + " to " + pathname);
-                            }
-                        }
-                        else{
-                            throw new IOException("Could not delete original input file");
-                        }
+                        inputFile.delete();
+                        tempFile.renameTo(inputFile);
                     }catch(IOException e){
                         System.out.println("Unable to read or write file: " + e);
                     }
@@ -350,6 +290,13 @@ public class Parser {
             }
                 break;
         }
+    }
+    public String convertDateTime(String dateTime){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'of' MMMM yyyy, h':'mma");
+        LocalDateTime localDate = LocalDateTime.parse(dateTime, formatter);
+        DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+        String formatDateTime = customFormatter.format(localDate);
+        return formatDateTime;
     }
     public boolean isExit(){
         return isExit;
