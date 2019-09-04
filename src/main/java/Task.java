@@ -1,6 +1,7 @@
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected String type;
 
     public Task(String description){
 
@@ -8,7 +9,7 @@ public class Task {
             this.description = description; //this.description refers to protected String description , = description (parameter)
         }
         else{
-
+            this.type = description;
             String token[] = description.split("deadline|todo|event");
             String intermediate = token[1];
             this.description = intermediate;
@@ -23,5 +24,4 @@ public class Task {
     public String toString(){
         return "[" + getStatusIcon() + "]" + description;
     }
-
 }

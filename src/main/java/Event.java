@@ -9,10 +9,10 @@ public class Event extends Task{
     public Event(String description, String at)throws DukeException{
         super(description);
         if (description.equals("event ") || description.equals("event")) {
-            throw new DukeException("______________________________________________________________________________\n ☹ OOPS!!! The description of an event cannot be empty.\n______________________________________________________________________________");
+            throw new DukeException("☹ OOPS!!! The description of an event cannot be empty.");
         }
         if (at.equals(description.trim()) || at.equals(" ")) {
-            throw new DukeException("______________________________________________________________________________\n ☹ OOPS!!! The time and date of an event cannot be empty.\n______________________________________________________________________________");
+            throw new DukeException("☹ OOPS!!! The time and date of an event cannot be empty.");
         } else {
 
             try {
@@ -32,9 +32,7 @@ public class Event extends Task{
     public String DateTimeFormat(String dateTime){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
         LocalDateTime localDate = LocalDateTime.parse(dateTime, formatter);
-        String localDateTimeString = formatter.format(localDate);
-
-        DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d'" + ordinalConversion(localDateTimeString) + "' 'of' MMMM yyyy, h':'mma");
+        DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d" + " 'of' MMMM yyyy, h':'mma");
         String result = customFormatter.format(localDate);
         return result;
     }
@@ -42,6 +40,9 @@ public class Event extends Task{
     public String ordinalConversion(String dateTimeFormat){
         String customToken [] = dateTimeFormat.split("/");
         int ordinalNumber = Integer.parseInt(customToken[0]);
+        if(ordinalNumber >= 11 && ordinalNumber <= 13){
+            return "th";
+        }
         switch(ordinalNumber % 10){
             case 1:
                 return "st";
