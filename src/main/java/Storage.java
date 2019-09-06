@@ -14,9 +14,9 @@ public class Storage{
     public ArrayList<Task> load()throws DukeException{
         try {
             File file = new File(pathname);
-            Scanner fileScan = new Scanner(file);
+            Scanner fileScan = new Scanner(file, "UTF-8");
             fileScan.useDelimiter("\n");
-            while(fileScan.hasNext()){
+            while(fileScan.hasNextLine()){
                 fileContent[index] = fileScan.nextLine();
                 String filetoken[] = fileContent[index].split(",");
                 if(filetoken[0].equals("D")){

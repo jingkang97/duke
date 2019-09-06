@@ -9,10 +9,10 @@ public class Event extends Task{
     public Event(String description, String at)throws DukeException{
         super(description);
         if (description.equals("event ") || description.equals("event")) {
-            throw new DukeException("☹ OOPS!!! The description of an event cannot be empty.");
+            throw new DukeException("OOPS!!! The description of an event cannot be empty.");
         }
         if (at.equals(description.trim()) || at.equals(" ")) {
-            throw new DukeException("☹ OOPS!!! The time and date of an event cannot be empty.");
+            throw new DukeException("OOPS!!! The time and date of an event cannot be empty.");
         } else {
 
             try {

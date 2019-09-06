@@ -90,7 +90,7 @@ public class Parser {
                     String search = findToken[1].trim();
                     System.out.println(tokens[1]);
                     if (tokens[1].isEmpty()) {
-                        System.out.println("☹ OOPS!!! The description of a search cannot be empty.");
+                        System.out.println("OOPS!!! The description of a search cannot be empty.");
                     }
                     else{
                         int i = 1;
@@ -104,11 +104,11 @@ public class Parser {
                         }
                     }
                 } catch (Exception e) {
-                    System.out.println("☹ OOPS!!! The task you want to find cannot be empty.");
+                    System.out.println("OOPS!!! The task you want to find cannot be empty.");
                 }
             }
                 break;
-            case "remove": {
+            case "delete": {
                 int result = Integer.parseInt(tokens[1]);
                 String taskToken[] = tasks.get(result - 1).toString().split("]");
                 String taskType = taskToken[0].equals("[E") ? "E" : taskToken[0].equals("[D") ? "D" : "T";
@@ -277,7 +277,6 @@ public class Parser {
                 System.out.println("Nice! I've marked this task as done: ");
                 tasks.get(result - 1).isDone = true;
                 System.out.println("[" + tasks.get(result - 1).getStatusIcon() + "]" + tasks.get(result - 1).description);
-
             }
                 break;
             case "bye": {
@@ -286,7 +285,7 @@ public class Parser {
             }
                 break;
             default: {
-                System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
                 break;
         }

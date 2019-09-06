@@ -9,10 +9,10 @@ public class Deadline extends Task {
     public Deadline(String description, String by) throws DukeException{
         super(description);
         if(description.equals("deadline ") || description.equals("deadline")){
-            throw new DukeException("☹ OOPS!!! The description of a deadline cannot be empty.");
+            throw new DukeException("OOPS!!! The description of a deadline cannot be empty.");
         }
         if(by.equals(description.trim()) || by.equals(" ")){
-            throw new DukeException("☹ OOPS!!! The time and date of a deadline cannot be empty.");
+            throw new DukeException("OOPS!!! The time and date of a deadline cannot be empty.");
         }
         else{
             try {

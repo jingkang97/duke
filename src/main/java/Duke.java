@@ -1,3 +1,4 @@
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Duke {
@@ -5,6 +6,7 @@ public class Duke {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
+    private static Scanner scan = new Scanner(System.in);
 
     public Duke(String filePath){
         ui = new Ui();
@@ -19,17 +21,19 @@ public class Duke {
     public void run(){
         ui.showWelcome();
         boolean isExit = false;
-        Scanner scan = new Scanner(System.in);
-        while(!isExit){
+
+        while(!isExit && scan.hasNextLine()){
             try {
                 String input = scan.nextLine();
                 ui.showLine();
                 Parser parser = new Parser(input);
                 parser.executeCommand(tasks);
                 isExit = parser.isExit();
-            }catch(Exception e){
+            }
+            catch(Exception e){
                 ui.showLoadingError(e.getMessage());
-            }finally{
+            }
+            finally{
                 ui.showLine();
             }
         }
