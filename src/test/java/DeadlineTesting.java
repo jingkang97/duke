@@ -6,7 +6,6 @@ public class DeadlineTesting {
 
     @Test
     public void testStringConversion(){
-
         try{assertEquals("[D]" + "[\u2718]" + " CG2027 Assignment(by: 9 of September 2019, 11:59PM)", new Deadline("deadline CG2027 Assignment",DateTime).toString());}
         catch(DukeException e){
             System.out.println("error: " + e);

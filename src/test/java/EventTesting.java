@@ -6,7 +6,6 @@ public class EventTesting {
 
     @Test
     public void testStringConversion(){
-
         try{assertEquals("[E]" + "[\u2718]" + " Orbital(at: 30 of August 2019, 7:00PM)", new Event("event Orbital",DateTime).toString());}
         catch(DukeException e){
             System.out.println("error: " + e);
