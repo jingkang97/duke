@@ -1,12 +1,13 @@
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Duke {
+
 
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
     private static Scanner scan = new Scanner(System.in);
+
 
     public Duke(String filePath){
         ui = new Ui();
@@ -18,6 +19,11 @@ public class Duke {
             tasks = new TaskList();
         }
     }
+
+    /**
+     * This is the function that runs the
+     *
+     */
     public void run(){
         ui.showWelcome();
         boolean isExit = false;

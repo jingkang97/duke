@@ -2,8 +2,11 @@ import java.io.*;
 import java.util.Scanner;
 import java.util.*;
 
+/**
+ * Contains methods that deals with the loading of tasks from the file
+ */
 public class Storage{
-
+    /**/
     private String pathname;
     private String [] fileContent = new String[100];
     private int index = 0;
