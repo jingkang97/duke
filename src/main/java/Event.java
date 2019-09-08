@@ -66,6 +66,7 @@ public class Event extends Task{
      */
     public String ordinalConversion(String dateTimeFormat){
         String customToken [] = dateTimeFormat.split("/");
+        /*converted String type number to int */
         int ordinalNumber = Integer.parseInt(customToken[0]);
         if(ordinalNumber >= 11 && ordinalNumber <= 13){
             return "th";

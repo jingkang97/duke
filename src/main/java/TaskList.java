@@ -15,13 +15,13 @@ public class TaskList {
 
     /**
      * Creates a new TaskList that is an array of different types of tasks
-     * @param tasks an ArrayList of type tasks
+     * @param tasks an ArrayList of type Task
      */
     public TaskList (ArrayList<Task> tasks){ this.tasks = tasks;}
 
     /**
      * Add Task to the array
-     * @param task an ArrayList of type tasks
+     * @param task an ArrayList of type Task
      */
     public void add(Task task){ this.tasks.add(task);}
 

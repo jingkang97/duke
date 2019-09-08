@@ -2,16 +2,43 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Deals with making sense of the user command and saving tasks in the file
+ */
 public class Parser {
-
+    /*Input from the user*/
     private String command;
+    /*The number of elements in the array*/
     private int sizeOfArray;
+    /*Checks whether the user have requested to exit the program*/
     private boolean isExit = false;
+    /*File path that leads to the text file which contains the content and data of the task list*/
     private String pathname = "/Users/ngjingkang/duke/data/duke.txt";
+    /*File path that creates a temporary text file for removing task and marking tasks as done*/
     private String temporaryPathName = "/Users/ngjingkang/duke/data/tempDuke.txt";
+
+    /**
+     * Represents a new Parser that takes in command of type String from the user input
+     * @param command input from the user of type String
+     */
     public Parser(String command){
         this.command = command;
     }
+
+    /**
+     * Takes in all the command from the user and executes the corresponding command based on the input from the user
+     * "deadline" - it will create and add a task of type deadline with task description and due date to the task list
+     * "event" - it will create and add a task of type event with task description and date of event to the task list
+     *  "todo" - it will create and add a task of type todo with task description to the task list
+     *  "find" - it will find the corresponding tasks in the list that contains those keywords and list them out
+     *  "list" - it will list out the current task list
+     *  "done" - it will mark the task as done and print out a tick
+     *  "delete" - it will remove the particular task from the task list
+     *  "bye" - it will exit the loop and hence, program
+     *  In the case whereby the input does not match any of those command, it will throw an exception
+     *  and inform the user that no such command exist
+     * @param tasks the current ArrayList of tasks
+     */
     public void executeCommand(TaskList tasks){
         String[] tokens = command.split(" ");
         sizeOfArray = tasks.sizeOfList();
@@ -290,6 +317,11 @@ public class Parser {
                 break;
         }
     }
+    /**
+     * Converts the date and time input format d of MMMM yyyy, h:mma to dd/mm/yyyy HHmm
+     * @param dateTime is a string of format d of MMMM yyyy, h:mma
+     * @return a string of date and time in the format dd/mm/yyyy HHmm
+     */
     public String convertDateTime(String dateTime){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'of' MMMM yyyy, h':'mma");
         LocalDateTime localDate = LocalDateTime.parse(dateTime, formatter);
@@ -297,6 +329,11 @@ public class Parser {
         String formatDateTime = customFormatter.format(localDate);
         return formatDateTime;
     }
+
+    /**
+     * Checks if user have keyed in "bye" in the input
+     * @return true if user input "bye" and returns false if there is not such input
+     */
     public boolean isExit(){
         return isExit;
     }
