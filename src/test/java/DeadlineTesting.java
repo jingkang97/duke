@@ -40,4 +40,12 @@ public class DeadlineTesting {
            Deadline deadline = new Deadline("deadline ", "9/9/2019, 1800"); //empty deadline description
         });
     }
+    /**
+     * Checks whether the correct Exception will be thrown when the date format is wrong
+     */
+    @Test void whenDateExceptionThrown(){
+        assertThrows(DukeException.class,() ->{
+            Deadline deadline = new Deadline("deadline geh assignment", "9999"); //empty event description
+        });
+    }
 }
