@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 /**
  * Test out the Deadline class methods to ensure they are working properly and producing the correct output
  */
@@ -27,5 +29,15 @@ public class DeadlineTesting {
         catch(DukeException e){
             System.out.println("error: " + e);
         }
+    }
+
+    /**
+     * Checks whether the correct Exception will be thrown when the input is wrong
+     */
+    @Test
+    public void whenExceptionThrown(){
+        assertThrows(DukeException.class,() ->{
+           Deadline deadline = new Deadline("deadline ", "9/9/2019, 1800"); //empty deadline description
+        });
     }
 }
