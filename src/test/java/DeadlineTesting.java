@@ -37,7 +37,7 @@ public class DeadlineTesting {
     @Test
     public void whenExceptionThrown(){
         assertThrows(DukeException.class,() ->{
-           Deadline deadline = new Deadline("deadline ", "9/9/2019, 1800"); //empty deadline description
+            Deadline deadline = new Deadline("deadline ", "9/9/2019, 1800"); //empty deadline description
         });
     }
     /**
@@ -49,3 +49,8 @@ public class DeadlineTesting {
         });
     }
 }
+
+
+
+
+

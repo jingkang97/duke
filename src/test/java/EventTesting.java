@@ -39,9 +39,13 @@ public class EventTesting {
             Event event = new Event("event ", "9/9/2019, 1800"); //empty event description
         });
     }
+    /**
+     * Checks whether the correct Exception will be thrown when the date format is wrong
+     */
     @Test void whenDateExceptionThrown(){
         assertThrows(DukeException.class,() ->{
             Event event = new Event("event orbital", "9999"); //wrong date time format
         });
     }
 }
+
